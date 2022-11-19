@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Authorization</title>
+    <link rel="icon" th:href="@{/icons/elephant2.png}">
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body style="background-color:  transparent;" th:attr="onload=${onload}">
+<div style="z-index: 1; width: 100%; height: 100%; position: absolute; top: 0; right: 0"
+     onclick="parent.closeIFrame();"></div>
+<div class="mt-4 container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-10 col-xl-5" style="z-index: 2">
+            <div style="background-color: white; border-radius: 25px; border: 2px solid #5700f7">
+                <img alt="elephant?" class="mx-auto d-block" width="200px" src="../static/icons/elephant.png"
+                     th:src="@{/icons/elephant.png}">
+                <p class="text-center display-4">Authorization</p>
+
+                <form action="#" th:action="@{/perform-login}" method="post">
+
+                    <div class="mx-5 px-5 form-group form-group-lg">
+                        <label for="username" class="h4">Username</label>
+                        <input type="text" id="username" name="username" class="form-control input-lg"/>
+                    </div>
+
+                    <div class="mx-5 px-5">
+                        <label for="password" class="h4">Password</label>
+                        <input type="password" id="password" name="password" class="form-control"/>
+                    </div>
+
+                    <div th:if="${param.error}" class="mx-5 px-5" style="color: red">
+                        <p>Wrong name or password</p>
+                    </div>
+
+                    <div class="d-flex justify-content-center m-3 pb-3">
+                        <button type="submit" class="btn btn-secondary btn-lg"
+                                style="background-color: #5700f7; border-color: white; border-radius: 30px">LogIn
+                        </button>
+                        <button type="button" onclick="location.href='/registration'"
+                                class="btn btn-secondary btn-lg pb-3 mx-4"
+                                style="background-color: grey; border-color: white; border-radius: 30px">Registration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
