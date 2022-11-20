@@ -3,6 +3,7 @@
 <head>
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/password-2" rel="stylesheet">
     <script crossorigin="anonymous"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -14,82 +15,181 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="icon" th:href="@{/icons/elephant2.png}">
+    <link rel="icon" th:href="@{/icons/jabba.png}">
 
     <script>
-        function closeIFrame() {
-            location.href = "/";
+        function closeIFrame(num) {
+            if (num === 1) {
+                window.location = "/index?registrationmsg";
+            } else {
+                window.location = "/";
+            }
         }
     </script>
     <style>
         ::-webkit-scrollbar {
             display: none;
         }
+
+        #current:hover {
+            color: red;
+        }
     </style>
 </head>
+<!--#fafafa-->
 <body style="background-color: #fafafa; height: 100%">
 <div class="px-0 container-fluid" th:styleappend="|filter: blur(${blur})|">
     <div class="row justify-content-center">
         <div class="col-12 col-xl-12">
-            <div style="background-color: white; border-bottom: 2px solid #d9d9d9">
-                <div th:if="${param.logoutmsg}" class="mr-5" style="color: #5700f7; position: absolute; right: 0">You
+
+            <nav class="navbar sticky-top navbar-expand-xl navbar-light"
+                 style="background-color: white; border-bottom: 2px solid #d9d9d9">
+                <div th:if="${param.logoutmsg}" class="mr-5" style="color: black; position: absolute; right: 0; top: 0">
+                    You
                     have successfully logged out.
                 </div>
-                <div th:if="${param.registrationmsg}" class="mr-5" style="color: #5700f7; position: absolute; right: 0">You
+                <div th:if="${param.registrationmsg}" class="mr-5"
+                     style="color: black; position: absolute; right: 0; top: 0">You
                     have successfully registered.
                 </div>
-                <div th:if="${param.updatemsg}" class="mr-5" style="color: #5700f7; position: absolute; right: 0">You
+                <div th:if="${param.updatemsg}" class="mr-5" style="color: black; position: absolute; right: 0; top: 0">
+                    You
                     have successfully updated your account.
                 </div>
-                <div th:if="${param.deletemsg}" class="mr-5" style="color: #5700f7; position: absolute; right: 0">You
+                <div th:if="${param.deletemsg}" class="mr-5" style="color: black; position: absolute; right: 0; top: 0">
+                    You
                     have successfully deleted your account.
                 </div>
 
-                <nav class="navbar navbar-expand-xl navbar-light">
-                    <img alt="elephant?" class="d-block mx-5" src="../static/icons/elephant.png"
-                         th:src="@{/icons/elephant.png}"
+                <a href="/">
+                    <img alt="jabba?" class="d-block ml-5 mr-2" src="../static/icons/jabba.png"
+                         th:src="@{/icons/jabba.png}"
                          width="75px">
-                    <a class="display-4" href="/index" style="color: black">Elephant Restaurants</a>
-                    <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
-                            class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse"
-                            style="border: 2px solid #5700f7; border-radius: 20px" type="button">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link h4 px-4 mt-3"
-                                   href="/home"
-                                   style="color: white; background-color: #5700f7; border-radius: 30px">Home</a>
-                            </li>
-                            <li th:if="${newpost} == true" class="nav-item">
-                                <a class="nav-link h4 px-4 mt-3" href="/new">New Post</a>
-                            </li>
-                            <li th:if="${latest == true}" class="nav-item">
-                                <a class="nav-link h4 px-4 mt-3" href="/latest">Latest</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a aria-expanded="false" aria-haspopup="true"
-                                   class="nav-link dropdown-toggle h4 px-4 mt-3" data-toggle="dropdown"
-                                   id="navbarDropdownMenuLink" role="button"
-                                   th:text="${username}"></a>
-                                <div aria-labelledby="navbarDropdownMenuLink"
-                                     class="dropdown-menu dropdown-menu-right p-0"
-                                     style="border: none">
-                                    <a class="dropdown-item mb-2"
-                                       style="background-color: #5700f7; color: white; border-radius: 25px"
-                                       th:attr="href=${linkInOrAccount}"
-                                       th:text="${textInOrAccount}">LogIn</a>
-                                    <a class="dropdown-item"
-                                       style="background-color: grey; color: white; border-radius: 25px"
-                                       th:attr="href=${linkOutOrUp}"
-                                       th:text="${textOutOrUp}">LogOut</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                </a>
+                <a class="display-4" href="/" style="color: black; text-decoration: none; font-family: PASSWORD,serif">Jabba</a>
+                <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse"
+                        style="border: 2px solid black; border-radius: 20px" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a id="current" class="nav-link h4 px-4 mt-3"
+                               href="/home"
+                               style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">Home</a>
+                        </li>
+                        <li th:if="${newpost} == true" class="nav-item">
+                            <a class="nav-link h4 px-4 mt-3" href="/new">New Post</a>
+                        </li>
+                        <li th:if="${latest == true}" class="nav-item">
+                            <a class="nav-link h4 px-4 mt-3" href="/latest">Latest</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" aria-haspopup="true"
+                               class="nav-link dropdown-toggle h4 px-4 mt-3" data-toggle="dropdown"
+                               id="navbarDropdownMenuLink" role="button"
+                               th:text="${username}"></a>
+                            <div aria-labelledby="navbarDropdownMenuLink"
+                                 class="dropdown-menu dropdown-menu-right p-1"
+                                 style="margin-top: 9px; border: 2px solid #d9d9d9; border-top: 2px solid white; border-radius: 0 0 10px 10px;">
+                                <a class="dropdown-item mb-2"
+                                   style="background-color: #E9C996; color: black; border-radius: 25px"
+                                   th:attr="href=${linkInOrAccount}"
+                                   th:text="${textInOrAccount}">Log In</a>
+                                <a class="dropdown-item"
+                                   style="background-color: grey; color: white; border-radius: 25px"
+                                   th:attr="href=${linkOutOrUp}"
+                                   th:text="${textOutOrUp}">Log Out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div>
+                <pre>
+                aasdasdasd
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+                a
+            </pre>
             </div>
+
         </div>
     </div>
 </div>

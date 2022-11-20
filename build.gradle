@@ -6,7 +6,6 @@ plugins {
 
 group = 'ru.mirea.web3'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
 
 configurations {
     compileOnly {

@@ -12,13 +12,6 @@ import ru.mirea.web3.web3javaclient.entity.User;
 public class SecurityUserDetailsService implements UserDetailsService {
     private RestTemplate restTemplate;
 
-    private SecurityConfiguration securityConfiguration;
-
-    @Autowired
-    public void setSecurityConfiguration(SecurityConfiguration securityConfiguration) {
-        this.securityConfiguration = securityConfiguration;
-    }
-
     @Autowired
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

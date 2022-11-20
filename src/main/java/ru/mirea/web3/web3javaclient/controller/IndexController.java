@@ -24,7 +24,7 @@ public class IndexController {
         if (request.getUserPrincipal() != null) {
             model.addAttribute("username", request.getUserPrincipal().getName());
             model.addAttribute("linkOutOrUp", "/logout");
-            model.addAttribute("textOutOrUp", "LogOut");
+            model.addAttribute("textOutOrUp", "Log Out");
             model.addAttribute("linkInOrAccount", "/index?account");
             model.addAttribute("textInOrAccount", "Account");
             model.addAttribute("newpost", true);
@@ -32,9 +32,9 @@ public class IndexController {
         } else {
             model.addAttribute("username", "Stranger?");
             model.addAttribute("linkOutOrUp", "/index?registration");
-            model.addAttribute("textOutOrUp", "SignUp");
+            model.addAttribute("textOutOrUp", "Sign Up");
             model.addAttribute("linkInOrAccount", "/index?login");
-            model.addAttribute("textInOrAccount", "LogIn");
+            model.addAttribute("textInOrAccount", "Log In");
             model.addAttribute("newpost", false);
             model.addAttribute("latest", false);
         }

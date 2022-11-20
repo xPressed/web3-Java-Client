@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.mirea.web3.web3javaclient.entity.User;
 import ru.mirea.web3.web3javaclient.security.SecurityConfiguration;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -28,7 +29,10 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(HttpServletRequest request, Model model) {
+        if (request.getUserPrincipal() != null) {
+            model.addAttribute("onload", "exit(0)");
+        }
         model.addAttribute("user", new User());
         return "registration";
     }
@@ -53,11 +57,10 @@ public class RegistrationController {
         if (restTemplate.getForObject("/user?username=" + user.getUsername(), User.class) == null) {
             user.setPassword(securityConfiguration.encoder().encode(user.getPassword()));
             restTemplate.postForObject("/user", user, User.class);
-            model.addAttribute("onload", "parent.closeIFrame()");
+            model.addAttribute("onload", "exit(1)");
         } else {
             bindingResult.rejectValue("username", "user.username", "This username is already taken!");
         }
-
-        return "redirect:/index?registrationmsg";
+        return "registration";
     }
 }
