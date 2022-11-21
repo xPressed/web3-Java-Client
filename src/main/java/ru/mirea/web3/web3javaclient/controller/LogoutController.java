@@ -1,7 +1,6 @@
 package ru.mirea.web3.web3javaclient.controller;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +13,9 @@ import java.util.Optional;
 @Controller
 public class LogoutController {
     @GetMapping("/logout")
-    public String executeLogout(HttpServletRequest request, HttpServletResponse response,
+    public String executeLogout(HttpServletRequest request, Authentication authentication, HttpServletResponse response,
                                 @RequestParam("update") Optional<String> update,
                                 @RequestParam("delete") Optional<String> delete) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }

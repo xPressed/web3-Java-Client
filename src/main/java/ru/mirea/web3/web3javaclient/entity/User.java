@@ -27,6 +27,8 @@ public class User implements UserDetails {
 
     private String old;
 
+    private byte[] profilePicture;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

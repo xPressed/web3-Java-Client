@@ -14,53 +14,33 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Account</title>
     <link rel="icon" th:href="@{/icons/jabba.png}">
 
     <script>
-        function closeIFrame(num) {
-            if (num === 1) {
-                window.location = "/index?registrationmsg";
-            } else {
-                window.location = "/";
-            }
+        function closeIFrame(username) {
+            window.location = "/account/" + username;
         }
     </script>
+
     <style>
         ::-webkit-scrollbar {
             display: none;
         }
 
-        #current:hover {
+        #navbarDropdownMenuLink:hover {
             color: red;
         }
     </style>
 </head>
-<!--#fafafa-->
-<body style="background-color: #fafafa; height: 100%;" th:styleappend="|overflow: ${overflow}|">
+
+<body style="height: 100%">
 <div class="px-0 container-fluid" th:styleappend="|filter: blur(${blur})|">
     <div class="row justify-content-center">
         <div class="col-12 col-xl-12">
 
             <nav class="navbar sticky-top navbar-expand-xl navbar-light"
                  style="background-color: white; border-bottom: 2px solid #d9d9d9">
-                <div th:if="${param.logoutmsg}" class="mr-5" style="color: black; position: absolute; right: 0; top: 0">
-                    You
-                    have successfully logged out.
-                </div>
-                <div th:if="${param.registrationmsg}" class="mr-5"
-                     style="color: black; position: absolute; right: 0; top: 0">You
-                    have successfully registered.
-                </div>
-                <div th:if="${param.updatemsg}" class="mr-5" style="color: black; position: absolute; right: 0; top: 0">
-                    You
-                    have successfully updated your account.
-                </div>
-                <div th:if="${param.deletemsg}" class="mr-5" style="color: black; position: absolute; right: 0; top: 0">
-                    You
-                    have successfully deleted your account.
-                </div>
-
                 <a href="/">
                     <img alt="jabba?" class="d-block ml-5 mr-2" src="../static/icons/jabba.png"
                          th:src="@{/icons/jabba.png}"
@@ -74,131 +54,61 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a id="current" class="nav-link h4 px-4 mt-3"
-                               href="/home"
-                               style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">Home</a>
+                        <li class="nav-item">
+                            <a class="nav-link h4 px-4 mt-3" href="/home">Home</a>
                         </li>
-                        <li th:if="${newpost} == true" class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link h4 px-4 mt-3" href="/new">New Post</a>
                         </li>
-                        <li th:if="${latest == true}" class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link h4 px-4 mt-3" href="/latest">Latest</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item active dropdown">
                             <a aria-expanded="false" aria-haspopup="true"
                                class="nav-link dropdown-toggle h4 px-4 mt-3" data-toggle="dropdown"
                                id="navbarDropdownMenuLink" role="button"
-                               th:text="${username}"></a>
+                               th:text="${username}"
+                               style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">test</a>
                             <div aria-labelledby="navbarDropdownMenuLink"
                                  class="dropdown-menu dropdown-menu-right p-1"
                                  style="margin-top: 9px; border: 2px solid #d9d9d9; border-top: 2px solid white; border-radius: 0 0 10px 10px;">
                                 <a class="dropdown-item mb-2"
                                    style="background-color: #E9C996; color: black; border-radius: 25px"
-                                   th:attr="href=${linkInOrAccount}"
-                                   th:text="${textInOrAccount}">Log In</a>
+                                   th:href="|/account/${username}|">Account</a>
                                 <a class="dropdown-item"
                                    style="background-color: grey; color: white; border-radius: 25px"
-                                   th:attr="href=${linkOutOrUp}"
-                                   th:text="${textOutOrUp}">Log Out</a>
+                                   href="/logout">Log Out</a>
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
 
+            <div class="my-5 row justify-content-center">
+                <div class="col-12 col-xl-9" style="background-color: white">
+                    <img id="image" style="vertical-align: middle; width: 300px; height: 300px; border-radius: 50%;"
+                         class="mx-auto d-block" th:src="${image}" alt="profile?" onerror="this.src='0/image'">
+                    <p th:text="${current}" class="text-center my-3 h3">test</p>
+                    <p style="background-color: white; width: 500px;" class="mx-auto text-break my-4 h5"
+                       th:text="${description}">text</p>
 
-            <div>
-                <pre>
-                aasdasdasd
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-                a
-            </pre>
+                    <div class="d-flex justify-content-center m-3 pb-3">
+                        <button th:if="${owner}" type="button"
+                                th:attrappend="onclick=|window.location='/account/${username}?edit'|"
+                                class="btn btn-secondary mx-auto"
+                                style="color: black; background-color: #E9C996; border-color: white; border-radius: 30px">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
             </div>
 
         </div>
     </div>
 </div>
 
-<iframe src="/login" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"
-        th:if="${param.login}"></iframe>
-<iframe src="/registration"
-        style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"
-        th:if="${param.registration}"></iframe>
+<iframe src="/account-edit" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"
+        th:if="${param.edit} and ${owner}"></iframe>
 
 </body>
 </html>
