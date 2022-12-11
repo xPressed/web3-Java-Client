@@ -5,11 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.mirea.web3.web3javaclient.entity.User;
 
 import java.util.Optional;
 
 @Controller
 public class IndexController {
+
+    private String getToken(Authentication authentication){
+        User user = (User) authentication.getPrincipal();
+        return user.getToken();
+    }
     @GetMapping({"/index", "/", "/home"})
     public String showIndexPage(Authentication authentication, Model model,
                                 @RequestParam("login") Optional<String> login,
@@ -26,7 +32,7 @@ public class IndexController {
             model.addAttribute("username", authentication.getName());
             model.addAttribute("linkOutOrUp", "/logout");
             model.addAttribute("textOutOrUp", "Log Out");
-            model.addAttribute("linkInOrAccount", "/account/" + authentication.getName());
+            model.addAttribute("linkInOrAccount", "/account/" + getToken(authentication));
             model.addAttribute("textInOrAccount", "Account");
             model.addAttribute("newpost", true);
             model.addAttribute("latest", true);

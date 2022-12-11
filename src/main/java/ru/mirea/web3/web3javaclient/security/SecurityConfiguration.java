@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .loginProcessingUrl("/perform-login")
-                .usernameParameter("username")
+                .usernameParameter("token")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/login?complete", true)
                 .failureUrl("/login?error")

@@ -1,0 +1,14 @@
+.btn-edit {
+    color: black;
+    background-color: #E9C996;
+    border-color: white;
+}
+
+.frame-edit {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: none;
+}

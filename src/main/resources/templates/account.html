@@ -16,6 +16,7 @@
     <meta charset="UTF-8">
     <title>Account</title>
     <link rel="icon" th:href="@{/icons/jabba.png}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 
     <script>
         function closeIFrame(username) {
@@ -74,7 +75,7 @@
                                  style="margin-top: 9px; border: 2px solid #d9d9d9; border-top: 2px solid white; border-radius: 0 0 10px 10px;">
                                 <a class="dropdown-item mb-2"
                                    style="background-color: #E9C996; color: black; border-radius: 25px"
-                                   th:href="|/account/${username}|">Account</a>
+                                   th:href="|/account/${myToken}|">Account</a>
                                 <a class="dropdown-item"
                                    style="background-color: grey; color: white; border-radius: 25px"
                                    href="/logout">Log Out</a>
@@ -88,17 +89,39 @@
                 <div class="col-12 col-xl-9" style="background-color: white">
                     <img id="image" style="vertical-align: middle; width: 300px; height: 300px; border-radius: 50%;"
                          class="mx-auto d-block" th:src="${image}" alt="profile?" onerror="this.src='0/image'">
-                    <p th:text="${current}" class="text-center my-3 h3">test</p>
-                    <p style="background-color: white; width: 500px;" class="mx-auto text-break my-4 h5"
+                    <p th:text="${username}" class="text-center my-3 h3">username</p>
+                    <p th:text="${current}" class="text-center my-3 h6">token</p>
+                    <p style="background-color: white; width: 500px;" class="mx-auto text-break my-4 h4"
                        th:text="${description}">text</p>
 
                     <div class="d-flex justify-content-center m-3 pb-3">
-                        <button th:if="${owner}" type="button"
-                                th:attrappend="onclick=|window.location='/account/${username}?edit'|"
-                                class="btn btn-secondary mx-auto"
-                                style="color: black; background-color: #E9C996; border-color: white; border-radius: 30px">
-                            Edit Profile
-                        </button>
+                        <div th:if="${owner}" class="btn-group" role="group">
+                            <button id="btn-edit-picture" type="button"
+                                    th:attrappend="onclick=|window.location='/account/${current}?editPicture'|"
+                                    class="btn btn-secondary btn-edit">
+                                Edit Picture
+                            </button>
+                            <button id="btn-edit-username" type="button"
+                                    th:attrappend="onclick=|window.location='/account/${current}?editName'|"
+                                    class="btn btn-secondary btn-edit">
+                                Edit Username
+                            </button>
+                            <button id="btn-edit-password" type="button"
+                                    th:attrappend="onclick=|window.location='/account/${current}?editPassword'|"
+                                    class="btn btn-secondary btn-edit">
+                                Edit Password
+                            </button>
+                            <button id="btn-edit-description" type="button"
+                                    th:attrappend="onclick=|window.location='/account/${current}?editDescription'|"
+                                    class="btn btn-secondary btn-edit">
+                                Edit Description
+                            </button>
+                            <button id="btn-edit-token" type="button"
+                                    th:attrappend="onclick=|window.location='/account/${current}?editToken'|"
+                                    class="btn btn-secondary btn-edit">
+                                Rebuild token
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,8 +130,15 @@
     </div>
 </div>
 
-<iframe src="/account-edit" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"
-        th:if="${param.edit} and ${owner}"></iframe>
-
+<iframe src="/account-editPicture" th:if="${param.editPicture} and ${owner}" class="frame-edit">
+</iframe>
+<iframe src="/account-editName" th:if="${param.editName} and ${owner}" class="frame-edit">
+</iframe>
+<iframe src="/account-editPassword" th:if="${param.editPassword} and ${owner}" class="frame-edit">
+</iframe>
+<iframe src="/account-editDescription" th:if="${param.editDescription} and ${owner}" class="frame-edit">
+</iframe>
+<iframe src="/account-editToken" th:if="${param.editToken} and ${owner}" class="frame-edit">
+</iframe>
 </body>
 </html>

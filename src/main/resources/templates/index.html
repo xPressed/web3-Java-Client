@@ -17,7 +17,7 @@
     <title>Home</title>
     <link rel="icon" th:href="@{/icons/jabba.png}">
 
-    <script>
+    <script th:inline="javascript">
         function closeIFrame(num) {
             if (num === 1) {
                 window.location = "/index?registrationmsg";
@@ -26,6 +26,7 @@
             }
         }
     </script>
+
     <style>
         ::-webkit-scrollbar {
             display: none;
@@ -61,12 +62,12 @@
                     have successfully deleted your account.
                 </div>
 
-                <a href="/">
+                <a onclick="parent.location.href='/'">
                     <img alt="jabba?" class="d-block ml-5 mr-2" src="../static/icons/jabba.png"
                          th:src="@{/icons/jabba.png}"
                          width="75px">
                 </a>
-                <a class="display-4" href="/" style="color: black; text-decoration: none; font-family: PASSWORD,serif">Jabba</a>
+                <a onclick="parent.location.href='/'" class="display-4" style="color: black; text-decoration: none; font-family: PASSWORD,serif">Jabba</a>
                 <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
                         class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse"
                         style="border: 2px solid black; border-radius: 20px" type="button">
@@ -75,8 +76,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a id="current" class="nav-link h4 px-4 mt-3"
-                               href="/home"
+                            <a onclick="parent.location.href='/home'" id="current" class="nav-link h4 px-4 mt-3"
                                style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">Home</a>
                         </li>
                         <li th:if="${newpost} == true" class="nav-item">

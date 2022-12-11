@@ -7,15 +7,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import ru.mirea.web3.web3javaclient.entity.User;
 import ru.mirea.web3.web3javaclient.security.SecurityConfiguration;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 @Controller
@@ -42,8 +45,9 @@ public class RegistrationController {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String completeRegistration(@Valid User user, BindingResult bindingResult, Model model) throws IOException {
+    @PostMapping(value = "/registration")
+    @ResponseBody
+    public String completeRegistration(@Valid User user, BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "registration";
@@ -59,20 +63,22 @@ public class RegistrationController {
             return "registration";
         }
 
-        if (restTemplate.getForObject("/user?username=" + user.getUsername(), User.class) == null) {
-            user.setPassword(securityConfiguration.encoder().encode(user.getPassword()));
+        String pass = user.getPassword();
+        user.setPassword(securityConfiguration.encoder().encode(user.getPassword()));
 
-            BufferedImage bufferedImage = ImageIO.read(new File("src/main/resources/static/icons/defaultPicture.png"));
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", bos);
-            byte[] data = bos.toByteArray();
-            user.setProfilePicture(data);
+        BufferedImage bufferedImage = ImageIO.read(new File("src/main/resources/static/icons/defaultPicture.png"));
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", bos);
+        byte[] data = bos.toByteArray();
+        user.setProfilePicture(data);
 
-            restTemplate.postForObject("/user", user, User.class);
-            model.addAttribute("onload", "exit(1)");
-        } else {
-            bindingResult.rejectValue("username", "user.username", "This username is already taken!");
-        }
-        return "registration";
+        user = restTemplate.postForObject("/user", user, User.class);
+        model.addAttribute("onload", "exit(1)");
+
+        //Add token text
+
+        return "<h2>TOKEN: " + user.getToken() + "<br>Name: " + user.getUsername() + "<br>Password: " + pass
+                + "<br>Remember the data, in case of loss of the token, you will not be able to access the account</h2>"
+                + "<h3><a href='" + request.getLocalAddr() + "'>To main page</a><h3>";
     }
 }

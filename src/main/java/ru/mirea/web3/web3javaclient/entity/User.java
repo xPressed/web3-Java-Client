@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Getter
@@ -14,6 +15,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
+    private String token;
     @NonNull
     @NotEmpty(message = "Username can not be empty!")
     @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$", message = "Only numbers and at least 3 and not more than 15 letters!")
@@ -24,6 +26,9 @@ public class User implements UserDetails {
     private String password;
 
     private String repeated;
+
+    @Size(max = 100, message = "Only numbers and not more than 100 letters!")
+    private String description;
 
     private String old;
 

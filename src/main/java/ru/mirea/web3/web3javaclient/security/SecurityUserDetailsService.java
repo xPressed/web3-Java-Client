@@ -19,8 +19,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = restTemplate.getForObject("/user?username=" + username, User.class);
-
+        User user = restTemplate.getForObject("/user?token=" + username, User.class);
         if (user == null) {
             throw new UsernameNotFoundException("User not found!");
         } else {
