@@ -5,7 +5,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.cdnfonts.com/css/password-2" rel="stylesheet">
   <meta charset="UTF-8">
-  <title>Authorization</title>
+  <title>Desc</title>
   <link rel="icon" th:href="@{/icons/jabba.png}">
 
   <style>
@@ -33,7 +33,7 @@
                    placeholder="Enter Your Description!"/>
           </div>
 
-          <div th:if="${param.error}" class="mx-5 px-5" style="color: red">
+          <div th:if="${badcred}" class="mx-5 px-5" style="color: red">
             <p>Only numbers and not more than 100 letters!</p>
           </div>
 

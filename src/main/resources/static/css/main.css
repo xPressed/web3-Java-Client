@@ -12,3 +12,12 @@
     top: 0;
     border: none;
 }
+
+.user-href-post{
+    color: black;
+    link: black;
+    text-decoration: none;
+}
+.user-href-post:hover{
+    color: #E9C996;
+}

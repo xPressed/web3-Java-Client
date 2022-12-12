@@ -5,7 +5,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.cdnfonts.com/css/password-2" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Jabba | Registration</title>
     <link rel="icon" th:href="@{/icons/jabba.png}">
 
     <style>
@@ -51,7 +51,7 @@
 
                     <div class="mx-5 px-5 form-group form-group-lg">
                         <label for="username" class="h4">Your Username</label>
-                        <input type="text" id="username" class="form-control input-lg" th:field="*{username}"
+                        <input type="text" maxlength="15" id="username" class="form-control input-lg" th:field="*{username}"
                                placeholder="Enter New Username"/>
                         <label for="username" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                style="color: red"></label>

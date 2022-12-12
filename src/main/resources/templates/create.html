@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" style="height: 100%;" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="height: 100%;">
 <head>
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
@@ -14,9 +14,8 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
-    <title>Jabba | Home</title>
+    <title>Jabba | New Post</title>
     <link rel="icon" th:href="@{/icons/jabba.png}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
 
     <script th:inline="javascript">
         function closeIFrame(num) {
@@ -40,9 +39,9 @@
 </head>
 <!--#fafafa-->
 <body style="background-color: #fafafa; height: 100%;" th:styleappend="|overflow: ${overflow}|">
-<div class="px-0 container-fluid"  th:styleappend="|filter: blur(${blur})|">
+<div class="px-0 container-fluid" th:styleappend="|filter: blur(${blur})|">
     <div class="row justify-content-center">
-        <div class="col-12 col-xl-12" style="min-height: 94vh;">
+        <div class="col-12 col-xl-12">
 
             <nav class="navbar sticky-top navbar-expand-xl navbar-light"
                  style="background-color: white; border-bottom: 2px solid #d9d9d9">
@@ -62,19 +61,13 @@
                     You
                     have successfully deleted your account.
                 </div>
-                <div th:if="${param.notfoundmsg}" class="mr-5"
-                     style="color: black; position: absolute; right: 0; top: 0">
-                    You
-                    are trying to access a non-existent token.
-                </div>
 
                 <a onclick="parent.location.href='/'">
                     <img alt="jabba?" class="d-block ml-5 mr-2" src="../static/icons/jabba.png"
                          th:src="@{/icons/jabba.png}"
                          width="75px">
                 </a>
-                <a onclick="parent.location.href='/'" class="display-4"
-                   style="color: black; text-decoration: none; font-family: PASSWORD,serif">Jabba</a>
+                <a onclick="parent.location.href='/'" class="display-4" style="color: black; text-decoration: none; font-family: PASSWORD,serif">Jabba</a>
                 <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
                         class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse"
                         style="border: 2px solid black; border-radius: 20px" type="button">
@@ -82,14 +75,14 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a onclick="parent.location.href='/home'" id="current" class="nav-link h4 px-4 mt-3">Home</a>
+                        </li>
                         <li class="nav-item active">
-                            <a onclick="parent.location.href='/home'" id="current" class="nav-link h4 px-4 mt-3"
-                               style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">Home</a>
+                            <a class="nav-link h4 px-4 mt-3" href="/new"
+                               style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">New Post</a>
                         </li>
-                        <li th:if="${newpost} == true" class="nav-item">
-                            <a class="nav-link h4 px-4 mt-3" href="/new">New Post</a>
-                        </li>
-                        <li th:if="${latest == true}" class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link h4 px-4 mt-3" href="/latest/0">Latest</a>
                         </li>
                         <li class="nav-item dropdown">
@@ -102,71 +95,55 @@
                                  style="margin-top: 9px; border: 2px solid #d9d9d9; border-top: 2px solid white; border-radius: 0 0 10px 10px;">
                                 <a class="dropdown-item mb-2"
                                    style="background-color: #E9C996; color: black; border-radius: 25px"
-                                   th:attr="href=${linkInOrAccount}"
-                                   th:text="${textInOrAccount}">Log In</a>
+                                   th:attr="href=${linkInOrAccount}">Account</a>
                                 <a class="dropdown-item"
                                    style="background-color: grey; color: white; border-radius: 25px"
-                                   th:attr="href=${linkOutOrUp}"
-                                   th:text="${textOutOrUp}">Log Out</a>
+                                   href="/logout">Log Out</a>
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
 
-            <div sec:authorize="!isAuthenticated()" class="container text-center mt-5">
-                <h3>You`re not authenticated. Just login</h3>
-                <br><h4>Join Web3.0 Freedom with Jabba</h4>
-            </div>
 
-                <div sec:authorize="isAuthenticated()" class="container d-flex justify-content-around flex-wrap" style="background-color: white;">
-                    <div th:if="${count == 0}">
-                        <h3>You haven't signed up for anyone yet</h3>
-                        <h4>or</h4>
-                        <h3>The authors you have subscribed to have not posted</h3>
-                    </div>
-                    <div th:if="${count > 1 and depth == null}">
-                        <h3><a class="user-href-post" data-toggle="collapse" role="button" href="#collapseSubs" aria-expanded="false" aria-controls="collapseSubs">Checkout posts of The authors you have
-                            subscribed</a></h3>
-                        <br>
-                        <div class="collapse" id="collapseSubs" th:each="sub: ${subscriptions}">
-                            <h4><a th:href="|/home/${sub}/0|" class="user-href-post"><small th:text="${sub}"></small></a></h4>
-                        </div>
-                    </div>
-                    <div th:if="${posts != null}" th:each="post: ${posts}" class="card mb-3 mt-3" style="width: 18rem;">
-                        <img class="card-img-top" width="300px" height="300px" th:src="|/post/image/${post.id}|"
-                             alt="Post">
-                        <div class="card-body">
-                            <h6 class="card-title" style="font-family: 'Courier New', serif"
-                                th:text="${post.date}"></h6>
-                            <a class="user-href-post" th:href="|/account/${post.userToken}|"><h6 class="card-title"
-                                                                                                 style="font-family: 'Comic Sans MS', serif; font-size: small;"
-                                                                                                 th:text="${post.userToken}">
-                                Token</h6>
-                            </a>
-                            <p class="card-text" th:text="${post.description}">Description</p>
+            <div class="mt-5 container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-10 col-xl-5" style="z-index: 2">
+                        <div>
+                            <form action="#" th:action="@{/new}" method="post" enctype="multipart/form-data">
+                                <div th:if="${success}" class="mx-5 px-5" style="color: darkslategray">
+                                    <p>Post successfully created!</p>
+                                </div>
+
+                                <div class="mx-5 px-5 m-auto">
+                                    <hr style="background-color: #E9C996; height: 3px; border: 0;">
+                                    <h4>Picture</h4>
+                                    <br>
+                                    <input type="file" th:name="picture" id="picture" accept="image/*" class="form-control" required>
+                                    <hr style="background-color: #E9C996; height: 3px; border: 0;">
+                                    <h4>Description</h4>
+                                    <br>
+                                    <input required type="text" id="description" name="description" class="form-control"
+                                           placeholder="Description for post"/>
+                                    <hr style="background-color: #E9C996; height: 3px; border: 0;">
+                                </div>
+                                <div th:if="${badcred}" class="mx-5 px-5" style="color: red">
+                                    <p>Description must be from 3 to 50 letters!</p>
+                                </div>
+                                <div class="d-flex justify-content-center m-3 pb-3">
+                                    <button type="submit" class="btn btn-secondary btn-lg"
+                                            style="color: black; background-color: #E9C996; border-color: white; border-radius: 30px">
+                                        Create post!
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+
+        </div>
     </div>
 </div>
-
-<div sec:authorize="isAuthenticated()" th:if="${posts != null}" class="btn-group text-center d-flex justify-content-center pb-3 pt-3"
-     role="group"
-     aria-label="Selector">
-    <a class="user-href-post btn btn-secondary btn-edit" th:classappend="${depth > 0} ? a1 : disabled"
-       th:href="|/home/${tokenOwner}/${depth - 1}|">PREV</a>
-    <a class="user-href-post btn btn-secondary btn-edit"
-       th:classappend="${(depth + 1) * 5 < count} ? a1 : disabled"
-       th:href="|/home/${tokenOwner}/${depth + 1}|">NEXT</a>
-</div>
-
-<iframe src="/login" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"
-        th:if="${param.login}"></iframe>
-<iframe src="/registration"
-        style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"
-        th:if="${param.registration}"></iframe>
-
 </body>
 </html>

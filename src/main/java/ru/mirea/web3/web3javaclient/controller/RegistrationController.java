@@ -50,17 +50,17 @@ public class RegistrationController {
     public String completeRegistration(@Valid User user, BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);
-            return "registration";
+            return "<br>Error with creds. Check your data</h2>"
+                    + "<h3><a href='" + request.getLocalAddr() + "'>To main page</a><h3>";
         }
-
         if (user.getRepeated().isEmpty()) {
-            model.addAttribute("reperr", "Repeated password can not be empty!");
-            return "registration";
+            return "<br>Error with creds. Repeated password can not be empty!</h2>"
+                    + "<h3><a href='" + request.getLocalAddr() + "'>To main page</a><h3>";
         }
 
         if (!user.getPassword().equals(user.getRepeated())) {
-            model.addAttribute("reperr", "Passwords do not match!");
-            return "registration";
+            return "<br>Error with creds. Your passwords do not match!</h2>"
+                    + "<h3><a href='" + request.getLocalAddr() + "'>To main page</a><h3>";
         }
 
         String pass = user.getPassword();

@@ -1,5 +1,6 @@
 package ru.mirea.web3.web3javaclient.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +35,8 @@ public class User implements UserDetails {
     private String old;
 
     private byte[] profilePicture;
+    private List<Post> postList;
+    private List<String> subs;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

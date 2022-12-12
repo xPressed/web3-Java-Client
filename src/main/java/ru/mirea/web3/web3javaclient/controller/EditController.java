@@ -76,6 +76,10 @@ public class EditController {
     @PostMapping("/account-editName")
     public String editNamePage(Authentication authentication, Model model,
                                   @RequestParam("username") String name) {
+        if (name.length() < 3 || name.length() > 15){
+            model.addAttribute("badcred", true);
+            return "editName";
+        }
         User user = (User) authentication.getPrincipal();
         user.setUsername(name);
         restTemplate.postForObject("/user", user, User.class);
@@ -86,7 +90,10 @@ public class EditController {
     @PostMapping("/account-editDescription")
     public String editDescriptionPage(Authentication authentication, Model model,
                                @RequestParam("description") String description) {
-
+        if (description.length() > 100){
+            model.addAttribute("badcred", true);
+            return "editDescription";
+        }
         User user = (User) authentication.getPrincipal();
         user.setDescription(description);
         restTemplate.postForObject("/user", user, User.class);

@@ -14,7 +14,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
-    <title>Account</title>
+    <title>Jabba | Account</title>
     <link rel="icon" th:href="@{/icons/jabba.png}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
 
@@ -62,13 +62,13 @@
                             <a class="nav-link h4 px-4 mt-3" href="/new">New Post</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link h4 px-4 mt-3" href="/latest">Latest</a>
+                            <a class="nav-link h4 px-4 mt-3" href="/latest/0">Latest</a>
                         </li>
                         <li class="nav-item active dropdown">
                             <a aria-expanded="false" aria-haspopup="true"
                                class="nav-link dropdown-toggle h4 px-4 mt-3" data-toggle="dropdown"
                                id="navbarDropdownMenuLink" role="button"
-                               th:text="${username}"
+                               th:text="${myUsername}"
                                style="background-color: #E9C996; border: 2px solid red; border-radius: 30px">test</a>
                             <div aria-labelledby="navbarDropdownMenuLink"
                                  class="dropdown-menu dropdown-menu-right p-1"
@@ -91,8 +91,18 @@
                          class="mx-auto d-block" th:src="${image}" alt="profile?" onerror="this.src='0/image'">
                     <p th:text="${username}" class="text-center my-3 h3">username</p>
                     <p th:text="${current}" class="text-center my-3 h6">token</p>
-                    <p style="background-color: white; width: 500px;" class="mx-auto text-break my-4 h4"
+                    <p style="background-color: white; width: 20em;" class="mx-auto text-break my-4 h4"
                        th:text="${description}">text</p>
+                    <div style="background-color: white; width: 20em;" class="mx-auto text-break my-4 h4">
+                        <a class="user-href-post" data-toggle="collapse" role="button" href="#collapseSubs" aria-expanded="false" aria-controls="collapseSubs">List of subscriptions</a>
+                    <div class="collapse btn-group" id="collapseSubs" th:each="sub: ${subscriptions}">
+                        <a th:href="|/account/${sub}|" class="user-href-post"><small th:text="${sub}"></small></a>
+                        <a th:if="${owner}" id="btn-unsubscribe-self" th:href="|/unsubscribe/${sub}/1|"
+                           class="btn btn-secondary ml-3" style="background-color: darkred;" type="button">
+                            UnSubscribe
+                        </a>
+                    </div>
+                    </div>
 
                     <div class="d-flex justify-content-center m-3 pb-3">
                         <div th:if="${owner}" class="btn-group" role="group">
@@ -122,10 +132,33 @@
                                 Rebuild token
                             </button>
                         </div>
+                        <div th:if="!${owner}" class="btn-group" role="group">
+                            <a th:if="!${subscribed}" id="btn-subscribe" th:href="|/subscribe/${current}|"
+                               class="btn btn-secondary btn-edit" type="button">
+                                Subscribe
+                            </a>
+                            <a th:if="${subscribed}" id="btn-unsubscribe" th:href="|/unsubscribe/${current}/0|"
+                               class="btn btn-secondary" style="background-color: darkred;" type="button">
+                                UnSubscribe
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+        <div class="col-12 col-xl-9 d-flex justify-content-around flex-wrap" style="background-color: white">
+            <div th:each="post: ${posts}" class="card mb-3 mt-3" style="width: 18rem;">
+                <img class="card-img-top" width="300px" height="300px" th:src="|/post/image/${post.id}|" alt="Post">
+                <div class="card-body">
+                    <h6 class="card-title" style="font-family: 'Courier New', serif" th:text="${post.date}"></h6>
+                    <a class="user-href-post" th:href="|/account/${post.userToken}|"><h6 class="card-title"
+                                                                                         style="font-family: 'Comic Sans MS', serif; font-size: small;"
+                                                                                         th:text="${current}">Token</h6>
+                    </a>
+                    <p class="card-text" th:text="${post.description}">Description</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
